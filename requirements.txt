@@ -6,3 +6,5 @@ deep-sort-realtime
 torch
 torchvision
 tqdm
+pytz
+tzdata

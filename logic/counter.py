@@ -113,21 +113,105 @@
 
 #     def get_counts(self):
 #         return self.entered, self.exited, self.current
+
+#MONGODB ATLAS CONNECTION
+
+# from pymongo import MongoClient
+# from datetime import datetime
+# import certifi
+# from config.config import MONGO_URI
+
+# class PassengerCounter:
+#     def __init__(self):
+#         self.entered = 0
+#         self.exited = 0
+#         self.processed_ids = set()
+
+#          # -----------------------------
+#         # MongoDB Atlas connection
+#         # -----------------------------
+
+#         self.client = MongoClient(
+#             MONGO_URI,
+#             tls=True,
+#             tlsCAFile=certifi.where()
+#         )
+
+#         self.db = self.client["iRTMS"]
+#         self.events = self.db["passenger_events"]
+#         self.stops = self.db["stop_counts"]
+
+#         print("✅ MongoDB Atlas connected")
+
+#            # ---------------------------------
+#     # Update count when line crossed
+#     # ---------------------------------
+
+#     def update(self, track_id, direction, stop, stop_index):
+#         if track_id in self.processed_ids:
+#             return
+
+#         self.processed_ids.add(track_id)
+
+#         if direction == "IN":
+#             self.entered += 1
+#         else:
+#             self.exited += 1
+
+#         self.events.insert_one({
+#             "track_id": track_id,
+#             "direction": direction,
+#             "stop": stop,
+#             "stop_index": stop_index,
+#             "timestamp": datetime.utcnow()
+#         })
+
+#           # ---------------------------------
+#     # Store stop-wise summary
+#     # ---------------------------------
+
+#     def store_stop_data(self, stop, stop_index):
+#         self.stops.insert_one({
+#             "stop": stop,
+#             "stop_index": stop_index,
+#             "entered": self.entered,
+#             "exited": self.exited,
+#             "inside": self.entered - self.exited,
+#             "timestamp": datetime.utcnow()
+#         })
+
+#     def get_counts(self):
+#         return self.entered, self.exited, self.entered - self.exited
+
+#AUTO STARTUP
+
 from pymongo import MongoClient
 from datetime import datetime
+from zoneinfo import ZoneInfo
 import certifi
+
 from config.config import MONGO_URI
+
 
 class PassengerCounter:
     def __init__(self):
+        # -----------------------------
+        # Counters
+        # -----------------------------
         self.entered = 0
         self.exited = 0
+
+        # Track processed (track_id, stop_index)
         self.processed_ids = set()
 
-         # -----------------------------
+        # -----------------------------
+        # Timezone (India)
+        # -----------------------------
+        self.tz = ZoneInfo("Asia/Kolkata")
+
+        # -----------------------------
         # MongoDB Atlas connection
         # -----------------------------
-
         self.client = MongoClient(
             MONGO_URI,
             tls=True,
@@ -140,42 +224,63 @@ class PassengerCounter:
 
         print("✅ MongoDB Atlas connected")
 
-           # ---------------------------------
-    # Update count when line crossed
     # ---------------------------------
-
+    # Update count when line is crossed
+    # ---------------------------------
     def update(self, track_id, direction, stop, stop_index):
-        if track_id in self.processed_ids:
+        """
+        Updates passenger count when a person crosses the virtual line.
+        Prevents duplicate counting per stop.
+        """
+
+        key = (track_id, stop_index)
+        if key in self.processed_ids:
             return
 
-        self.processed_ids.add(track_id)
+        self.processed_ids.add(key)
 
         if direction == "IN":
             self.entered += 1
-        else:
+        elif direction == "OUT":
             self.exited += 1
+        else:
+            return
+
+        timestamp = datetime.now(ZoneInfo("Asia/Kolkata"))
+
 
         self.events.insert_one({
             "track_id": track_id,
             "direction": direction,
             "stop": stop,
             "stop_index": stop_index,
-            "timestamp": datetime.utcnow()
+            "timestamp": timestamp
         })
 
-          # ---------------------------------
+    # ---------------------------------
     # Store stop-wise summary
     # ---------------------------------
-
     def store_stop_data(self, stop, stop_index):
+        """
+        Stores aggregated passenger data for a stop.
+        """
+
+        timestamp = datetime.now(self.tz)
+
         self.stops.insert_one({
             "stop": stop,
             "stop_index": stop_index,
             "entered": self.entered,
             "exited": self.exited,
             "inside": self.entered - self.exited,
-            "timestamp": datetime.utcnow()
+            "timestamp": timestamp
         })
 
+    # ---------------------------------
+    # Get current counts
+    # ---------------------------------
     def get_counts(self):
+        """
+        Returns (entered, exited, inside)
+        """
         return self.entered, self.exited, self.entered - self.exited
