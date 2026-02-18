@@ -28,7 +28,7 @@ def main():
     # INITIALIZATION
     # --------------------------------
     video = VideoStream()
-    yolo = YOLODetector(YOLO("yolov8n.pt"))
+    yolo = YOLODetector(YOLO("yolov8m.pt")).to("cuda").half()
     tracker = DeepSORTTracker()
     line = LineCrossing()
     counter = PassengerCounter()
