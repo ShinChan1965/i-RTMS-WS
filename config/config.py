@@ -184,7 +184,7 @@ ROI_Y2 = 1000
 # ==============================
 
 MODEL_PATH = "yolov8m.pt"
-IMAGE_SIZE = 640              # 640 is optimal for RTX 2050 4GB
+IMAGE_SIZE = 512             # 640 is optimal for RTX 2050 4GB
 CONFIDENCE_THRESHOLD = 0.35
 IOU_THRESHOLD = 0.5
 MAX_DETECTIONS = 60

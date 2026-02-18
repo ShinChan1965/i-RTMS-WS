@@ -1,5 +1,6 @@
 # AUTO-RESTART + ROI + DEBUG/DEPLOYMENT VERSION
 import cv2
+import torch
 from ultralytics import YOLO
 
 from camera.video_stream import VideoStream
@@ -28,11 +29,14 @@ def main():
     # INITIALIZATION
     # --------------------------------
     video = VideoStream()
-    yolo = YOLODetector(YOLO("yolov8n.pt"))
+    # yolo = YOLODetector(YOLO("yolov8m.pt"))
+    model = YOLO("yolov8m.pt")
     tracker = DeepSORTTracker()
     line = LineCrossing()
     counter = PassengerCounter()
+    model = YOLO("yolov8m.pt")
 
+    yolo = YOLODetector(model)
     current_stop = "Surandai"
     stop_index = 1
 
