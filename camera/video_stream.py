@@ -3,7 +3,7 @@ from config.config import CAMERA_INDEX, FRAME_WIDTH, FRAME_HEIGHT
 
 class VideoStream:
     def __init__(self):
-        self.cap = cv2.VideoCapture(CAMERA_INDEX)
+        self.cap = cv2.VideoCapture(CAMERA_INDEX) #self.cap = camera object for THIS VideoStream.
 
     def read(self):
         ret, frame = self.cap.read()

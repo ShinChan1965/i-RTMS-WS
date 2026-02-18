@@ -1,30 +1,3 @@
-# class PassengerCounter:
-#     def __init__(self):
-#         self.entered = 0
-#         self.exited = 0
-#         self.current = 0
-
-#         # 🔒 Track IDs already counted
-#         self.counted_ids = set()
-
-#     def update(self, track_id, direction):
-#         # Each person counted only ONCE per journey
-#         if track_id in self.counted_ids:
-#             return
-
-#         if direction == "IN":
-#             self.entered += 1
-#             self.current += 1
-#             self.counted_ids.add(track_id)
-
-#         elif direction == "OUT":
-#             self.exited += 1
-#             self.current = max(0, self.current - 1)
-#             self.counted_ids.add(track_id)
-
-#     def get_counts(self):
-#         return self.entered, self.exited, self.current
-
 # MONGODB CONNECTIOWITH COMMUNITY SERVER
 
 # from datetime import datetime

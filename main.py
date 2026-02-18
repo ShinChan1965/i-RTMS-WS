@@ -13,11 +13,12 @@ from config.config import LINE_Y
 # -------------------------------
 # MODE SWITCH
 # -------------------------------
-DEBUG_MODE = False   # True = Debug | False = Deployment
+DEBUG_MODE = True   # True = Debug | False = Deployment
 
 
 def main():
     # --------------------------------
+    
     # INITIALIZATION
     # --------------------------------
     video = VideoStream()
