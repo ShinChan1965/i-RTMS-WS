@@ -44,8 +44,7 @@ class YOLODetector:
             stream=True,
             conf=CONFIDENCE_THRESHOLD,
             classes=[0],  # 👈 PERSON ONLY
-            half=True,
-            device=0, 
+            device="cpu", 
             verbose=False
         )
 

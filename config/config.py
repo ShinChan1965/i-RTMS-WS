@@ -61,14 +61,14 @@
 # =========================
 CAMERA_INDEX = 0
 
-FRAME_WIDTH = 640
-FRAME_HEIGHT = 480
+FRAME_WIDTH = 1920
+FRAME_HEIGHT = 1080
 
 
 # =========================
 # Virtual Line Configuration
 # =========================
-LINE_Y = 300   # Door line (calibrated based on camera position)
+LINE_Y = 500   # Door line (calibrated based on camera position)
 
 
 # =========================
@@ -98,9 +98,9 @@ DB_NAME = "iRTMS"
 USE_ROI = True   # Turn ROI ON/OFF easily
 
 # ROI coordinates (x1, y1, x2, y2)
-ROI_X1 = 500
+ROI_X1 = 100
 ROI_Y1 = 100
-ROI_X2 = 1420
+ROI_X2 = 1200
 ROI_Y2 = 1000
 
 
@@ -124,58 +124,58 @@ ROI_Y2 = 1000
 
 #Parvathi & Aarthi
 # model = yolov8s.pt
-# imgsz = 640
-# conf = 0.35
-# iou = 0.5
-# max_det = 50
-# device = "cpu"
-# max_age = 20
+# IMAGE_SIZE  = 640
+# CONFIDENCE_THRESHOLD = 0.35
+# IOU_THRESHOLD = 0.5
+# MAX_DETECTIONS = 50
+# DEVICE = "cpu"
+# MAX_AGE = 20
 # n_init = 3
-# max_iou_distance = 0.7
-# max_cosine_distance = 0.2
-# nn_budget = 100
+# IOU_THRESHOLD_TRACK = 0.7
+# MAX_COSINE_DISTANCE = 0.2
+# NN_BUDGET = 100
 
 #kaviya v8s
-# model = yolov8s.pt
-# imgsz = 640
-# conf = 0.35
-# iou = 0.5
-# max_det = 40
-# device = "cpu"
-# max_age = 15
-# n_init = 3
-# max_iou_distance = 0.7
-# max_cosine_distance = 0.2
-# nn_budget = 50
+MODEL_PATH = "yolov8s.pt"
+IMAGE_SIZE  = 640
+CONFIDENCE_THRESHOLD = 0.35
+IOU_THRESHOLD = 0.5
+MAX_DETECTIONS = 40
+DEVICE = "cpu"
+MAX_AGE = 15
+MIN_HITS = 3
+IOU_THRESHOLD_TRACK = 0.7
+MAX_COSINE_DISTANCE = 0.2
+NN_BUDGET = 50
 
 
 #Ponce v8s
 # model = yolov8s.pt
-# imgsz = 768        # You can safely use 768
-# conf = 0.35
-# iou = 0.5
-# max_det = 60
-# device = 0         # GPU
+# IMAGE_SIZE  = 768        # You can safely use 768
+# CONFIDENCE_THRESHOLD = 0.35
+# IOU_THRESHOLD  = 0.5
+# MAX_DETECTIONS = 60
+# DEVICE = 0         # GPU
 # half = True        # Enable FP16 (important for 4GB VRAM)
-# max_age = 25
+# MAX_AGE = 25
 # n_init = 3
-# max_iou_distance = 0.7
-# max_cosine_distance = 0.2
-# nn_budget = 100
+# IOU_THRESHOLD_TRACK = 0.7
+# MAX_COSINE_DISTANCE = 0.2
+# NN_BUDGET = 100
 
 #ponce v8m
 # model = yolov8m.pt
-# imgsz = 640        # Do NOT go above 640
-# conf = 0.35
-# iou = 0.5
-# max_det = 50
-# device = 0
+# IMAGE_SIZE = 640        # Do NOT go above 640
+# CONFIDENCE_THRESHOLD = 0.35
+# IOU_THRESHOLD = 0.5
+# MAX_DETECTIONS = 50
+# DEVICE = 0
 # half = True
-# max_age = 20
-# n_init = 3
-# max_iou_distance = 0.7
-# max_cosine_distance = 0.2
-# nn_budget = 100
+# MAX_AGE = 20
+# MIN_HITS = 3
+# IOU_THRESHOLD_TRACK = 0.7
+# MAX_COSINE_DISTANCE = 0.2
+# NN_BUDGET = 100
 
 
 #MADDY
@@ -183,27 +183,27 @@ ROI_Y2 = 1000
 # YOLO SETTINGS
 # ==============================
 
-MODEL_PATH = "yolov8m.pt"
-IMAGE_SIZE = 512             # 640 is optimal for RTX 2050 4GB
-CONFIDENCE_THRESHOLD = 0.35
-IOU_THRESHOLD = 0.5
-MAX_DETECTIONS = 60
-DEVICE = 0                    # 0 = GPU
-HALF_PRECISION = True         # Use FP16
+# MODEL_PATH = "yolov8m.pt"
+# IMAGE_SIZE = 512             # 640 is optimal for RTX 2050 4GB
+# CONFIDENCE_THRESHOLD = 0.35
+# IOU_THRESHOLD = 0.5
+# MAX_DETECTIONS = 60
+# DEVICE = 0                    # 0 = GPU
+# HALF_PRECISION = True         # Use FP16
 
-# ==============================
-# DEEPSORT SETTINGS
-# ==============================
+# # ==============================
+# # DEEPSORT SETTINGS
+# # ==============================
 
-MAX_AGE = 30                  # Frames to keep lost track
-MIN_HITS = 3                  # Confirm track after 3 detections
-IOU_THRESHOLD_TRACK = 0.7     # Matching threshold
-MAX_COSINE_DISTANCE = 0.2
-NN_BUDGET = 100
+# MAX_AGE = 30                  # Frames to keep lost track
+# MIN_HITS = 3                  # Confirm track after 3 detections
+# IOU_THRESHOLD_TRACK = 0.7     # Matching threshold
+# MAX_COSINE_DISTANCE = 0.2
+# NN_BUDGET = 100
 
-# ==============================
-# SYSTEM SETTINGS
-# ==============================
+# # ==============================
+# # SYSTEM SETTINGS
+# # ==============================
 
 FRAME_SKIP = 1                # 1 = process every frame
-INPUT_RESOLUTION = (640, 480) # Recommended
+# INPUT_RESOLUTION = (640, 480) # Recommended
